@@ -16,6 +16,8 @@ namespace RazorPages.Models
         public string Email { get; set; }
 
         public string PhotoPath { get; set; }
+
+        [Required]
         public Dept? Department { get; set; }
     }
 }

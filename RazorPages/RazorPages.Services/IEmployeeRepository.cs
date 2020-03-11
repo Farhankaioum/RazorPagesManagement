@@ -9,5 +9,7 @@ namespace RazorPages.Services
         IEnumerable<Employee> GetAllEmployees();
         Employee GetEmployeeById(int id);
         Employee Update(Employee updateEmployee);
+        Employee Add(Employee newEmployee);
+        Employee Delete(int id);
     }
 }

@@ -34,9 +34,18 @@ namespace RazorPages.Web
 
         public string Message { get; set; }
 
-        public IActionResult OnGet(int id)
+
+        public IActionResult OnGet(int? id)
         {
-            Employee = _employeeRepository.GetEmployeeById(id);
+            if (id.HasValue)
+            {
+                Employee = _employeeRepository.GetEmployeeById(id.Value);
+            }
+            else
+            {
+                Employee = new Employee();
+            }
+            
             if(Employee == null)
             {
                 return RedirectToPage("/NotFound");
@@ -61,7 +70,15 @@ namespace RazorPages.Web
                     Employee.PhotoPath = ProcessUploadedFile(Photo); ;
                 }
 
-                Employee = _employeeRepository.Update(Employee);
+                if (Employee.Id > 0)
+                {
+                    Employee = _employeeRepository.Update(Employee);
+                }
+                else
+                {
+                    Employee = _employeeRepository.Add(Employee);
+
+                }
 
                 return RedirectToPage("Index");
             }
