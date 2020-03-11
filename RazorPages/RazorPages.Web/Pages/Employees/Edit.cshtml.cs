@@ -23,6 +23,7 @@ namespace RazorPages.Web
             this.webHostEnvironment = webHostEnvironment;
         }
 
+        [BindProperty]
         public Employee Employee { get; set; }
 
         [BindProperty]
@@ -45,27 +46,32 @@ namespace RazorPages.Web
 
        
 
-        public IActionResult OnPost(Employee employee)
+        public IActionResult OnPost()
         {
-            if (Photo != null)
+            if (ModelState.IsValid)
             {
-                // For checking existing photo, if find then delete
-                if (employee.PhotoPath != null)
+                if (Photo != null)
                 {
-                    string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images", employee.PhotoPath);
-                    System.IO.File.Delete(filePath);
+                    // For checking existing photo, if find then delete
+                    if (Employee.PhotoPath != null)
+                    {
+                        string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images", Employee.PhotoPath);
+                        System.IO.File.Delete(filePath);
+                    }
+                    Employee.PhotoPath = ProcessUploadedFile(Photo); ;
                 }
-                employee.PhotoPath = ProcessUploadedFile(Photo); ;
+
+                Employee = _employeeRepository.Update(Employee);
+
+                return RedirectToPage("Index");
             }
 
-            Employee = _employeeRepository.Update(employee);
-
-            return RedirectToPage("Index");
+            return Page();
         }
 
 
         // For update notification Preferences
-        public void OnPostUpdateNotificationPreferences(int id)
+        public IActionResult OnPostUpdateNotificationPreferences(int id)
         {
             if (Notify)
                 Message = "Thank you for turning on notifications";
@@ -73,6 +79,10 @@ namespace RazorPages.Web
                 Message = "You have turned off email notifications";
 
             Employee = _employeeRepository.GetEmployeeById(id);
+
+            TempData["message"] = Message;
+
+            return RedirectToPage("Details", new {id = id});
         }
 
         // For compute photo path file name

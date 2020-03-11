@@ -20,6 +20,10 @@ namespace RazorPages.Web
             _employeeRepository = employeeRepository;
         }
 
+       // [BindProperty(SupportsGet = true)]
+       [TempData]
+        public string Message { get; set; }
+
         public Employee Employee { get; private set; }
 
         public IActionResult OnGet(int id)
