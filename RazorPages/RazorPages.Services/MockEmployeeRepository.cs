@@ -40,6 +40,7 @@ namespace RazorPages.Services
                 employee.Name = updateEmployee.Name;
                 employee.Email = updateEmployee.Email;
                 employee.Department = updateEmployee.Department;
+                employee.PhotoPath = updateEmployee.PhotoPath;
 
             }
 

@@ -28,6 +28,11 @@ namespace RazorPages.Web
         [BindProperty]
         public IFormFile Photo { get; set; }
 
+        [BindProperty]
+        public bool Notify { get; set; }
+
+        public string Message { get; set; }
+
         public IActionResult OnGet(int id)
         {
             Employee = _employeeRepository.GetEmployeeById(id);
@@ -38,10 +43,13 @@ namespace RazorPages.Web
             return Page();
         }
 
+       
+
         public IActionResult OnPost(Employee employee)
         {
             if (Photo != null)
             {
+                // For checking existing photo, if find then delete
                 if (employee.PhotoPath != null)
                 {
                     string filePath = Path.Combine(webHostEnvironment.WebRootPath, "images", employee.PhotoPath);
@@ -49,8 +57,22 @@ namespace RazorPages.Web
                 }
                 employee.PhotoPath = ProcessUploadedFile(Photo); ;
             }
-           Employee = _employeeRepository.Update(employee);
+
+            Employee = _employeeRepository.Update(employee);
+
             return RedirectToPage("Index");
+        }
+
+
+        // For update notification Preferences
+        public void OnPostUpdateNotificationPreferences(int id)
+        {
+            if (Notify)
+                Message = "Thank you for turning on notifications";
+            else
+                Message = "You have turned off email notifications";
+
+            Employee = _employeeRepository.GetEmployeeById(id);
         }
 
         // For compute photo path file name
