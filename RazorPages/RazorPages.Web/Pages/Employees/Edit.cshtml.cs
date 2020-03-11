@@ -9,27 +9,31 @@ using RazorPages.Services;
 
 namespace RazorPages.Web
 {
-    public class DetailsModel : PageModel
+    public class EditModel : PageModel
     {
         private readonly IEmployeeRepository _employeeRepository;
 
-        
-
-        public DetailsModel(IEmployeeRepository employeeRepository)
+        public EditModel(IEmployeeRepository employeeRepository)
         {
             _employeeRepository = employeeRepository;
         }
 
-        public Employee Employee { get; private set; }
+        public Employee Employee { get; set; }
 
         public IActionResult OnGet(int id)
         {
-           Employee = _employeeRepository.GetEmployeeById(id);
-            if (Employee == null)
+            Employee = _employeeRepository.GetEmployeeById(id);
+            if(Employee == null)
             {
                 return RedirectToPage("/NotFound");
             }
             return Page();
+        }
+
+        public IActionResult OnPost(Employee employee)
+        {
+           Employee = _employeeRepository.Update(employee);
+            return RedirectToPage("Index");
         }
     }
 }

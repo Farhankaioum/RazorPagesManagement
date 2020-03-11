@@ -30,7 +30,7 @@ namespace RazorPages.Web
 
             services.AddRazorPages();
 
-            // if want routing all character in lowercase also querystringvariable also TrailingSlash
+            // if want routing all character in lowercase also querystringvariable also want to TrailingSlash
             services.Configure<RouteOptions>(options =>
             {
                 options.LowercaseUrls = true;
