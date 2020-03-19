@@ -7,6 +7,7 @@ namespace RazorPages.Services
     public interface IEmployeeRepository
     {
         IEnumerable<Employee> GetAllEmployees();
+        IEnumerable<Employee> SearchEmp(string searchTerm);
         Employee GetEmployeeById(int id);
         Employee Update(Employee updateEmployee);
         Employee Add(Employee newEmployee);

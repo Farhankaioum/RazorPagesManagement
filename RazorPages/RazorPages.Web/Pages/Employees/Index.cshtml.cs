@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RazorPages.Models;
 using RazorPages.Services;
@@ -16,9 +17,21 @@ namespace RazorPages.Web
             _employeeRepository = employeeRepository;
         }
 
+        [BindProperty(SupportsGet =true)]
+        public string SearchTerm { set; get; }
+
         public void OnGet()
         {
-            Employees = _employeeRepository.GetAllEmployees();
+            if (SearchTerm != "")
+            {
+                Employees = _employeeRepository.SearchEmp(SearchTerm);
+            }
+            else
+            {
+                Employees = _employeeRepository.GetAllEmployees();
+            }
+
+            
         }
     }
 }
