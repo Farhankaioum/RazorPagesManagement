@@ -15,7 +15,8 @@
 </p>
 <h1>Employees</h1>
 
-@await Component.InvokeAsync("HeadCount", null)
+@*@await Component.InvokeAsync("HeadCount", null)*@
+<vc:head-count department="null"></vc:head-count>
 
 <div class="card-deck">
     @foreach (var employee in Model.Employees)
