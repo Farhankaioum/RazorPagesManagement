@@ -1,11 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RazorPages.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace RazorPages.Web.Data
+namespace RazorPages.Services.Data
 {
     public class AppDbContext : DbContext
     {
