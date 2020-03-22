@@ -1,4 +1,5 @@
-﻿using RazorPages.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using RazorPages.Models;
 using RazorPages.Services.Data;
 using System;
 using System.Collections.Generic;
@@ -60,7 +61,8 @@ namespace RazorPages.Services
 
         public Employee GetEmployeeById(int id)
         {
-            return _context.Employees.Find(id);
+            return _context.Employees
+                .FromSqlRaw<Employee>("spGetEmployeeById {0}", id).ToList().FirstOrDefault();
                     
         }
 
