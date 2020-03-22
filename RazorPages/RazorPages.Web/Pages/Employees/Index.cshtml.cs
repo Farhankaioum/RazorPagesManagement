@@ -22,7 +22,7 @@ namespace RazorPages.Web
 
         public void OnGet()
         {
-            if (SearchTerm != "")
+            if (!string.IsNullOrEmpty(SearchTerm))
             {
                 Employees = _employeeRepository.SearchEmp(SearchTerm);
             }
