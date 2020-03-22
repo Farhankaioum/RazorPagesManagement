@@ -57,6 +57,7 @@ namespace RazorPages.Services
         public IEnumerable<Employee> GetAllEmployees()
         {
             var employees = _context.Employees.FromSqlRaw("select * from Employees");
+            
             return employees;
         }
 
